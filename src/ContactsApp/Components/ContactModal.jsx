@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
-export const Modal = ({ removeRecipe }) => {
+export const ContactModal = ({ removeContact }) => {
   const navigate = useNavigate();
   const location = useLocation();
   return (
@@ -12,8 +12,8 @@ export const Modal = ({ removeRecipe }) => {
         <div className="pointer">
           <a
             onClick={(e) => {
-              removeRecipe(location.state.id);
-              navigate("/RecipesNoteHome");
+              removeContact(location.state.id);
+              navigate("/ContactAppHome");
             }}
             className="f6 link dim br2 ph3 pv2 mb2 dib white bg-navy"
           >
@@ -24,7 +24,7 @@ export const Modal = ({ removeRecipe }) => {
           <a
             onClick={(e) => {
               e.preventDefault();
-              navigate("/RecipesNoteHome");
+              navigate("/ContactAppHome");
             }}
             className="f6 link dim br2 ph3 pv2 mb2 dib white bg-navy ml2"
           >

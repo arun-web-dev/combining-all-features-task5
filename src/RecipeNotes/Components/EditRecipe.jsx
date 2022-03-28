@@ -31,7 +31,7 @@ class EditRecipe extends Component {
         {isActive ? (
           <Navigate to="/RecipesNoteHome" />
         ) : (
-          <main className="pa4 black-80 mw6 center shadow-1">
+          <main className="pa4 black-80 mw6 mt4  center shadow-1">
             <form className="measure center" onSubmit={this.editRecipe}>
               <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                 <legend className="f4 fw6 ph0 mh0">Edit Recipe</legend>

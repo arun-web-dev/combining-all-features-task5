@@ -5,15 +5,23 @@ import { App as RecipeFinderApp } from "./RecipeFinder/Components/App";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Header } from "./RecipeNotes/Components/Header";
 import { RecipeList } from "./RecipeNotes/Components/RecipeList";
+import { ContactList } from "./ContactsApp/Components/ContactList";
 import AddRecipe from "./RecipeNotes/Components/AddRecipe";
 import { v4 as uuidV4 } from "uuid";
 import EditRecipe from "./RecipeNotes/Components/EditRecipe";
 import { Modal } from "./RecipeNotes/Components/Modal";
 import { RecipeDetail } from "./RecipeNotes/Components/RecipeDetail";
+import { AddContact } from "./ContactsApp/Components/AddContact";
+import EditContact from "./ContactsApp/Components/EditContact";
+import { ContactDetail } from "./ContactsApp/Components/ContactDetail";
+import { ContactModal } from "./ContactsApp/Components/ContactModal";
+import { ContactHeader } from "./ContactsApp/Components/ContactHeader";
 function App() {
   // states for RecipeList App
   const LOCAL_STORAGE_KEY = "recipes";
+  const LOCAL_STORAGE_KEY_CONTACT = "contacts";
   const [recipes, setRecipes] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const addRecipe = (recipe) => {
     const { title, publisher } = recipe;
     setRecipes([
@@ -26,6 +34,18 @@ function App() {
       },
     ]);
   };
+  const addContact = (contact) => {
+    const { name, email } = contact;
+    setContacts([
+      ...contacts,
+      {
+        id: uuidV4(),
+        name,
+        email,
+        image: `https://picsum.photos/200/300?random=${contact.id}`,
+      },
+    ]);
+  };
 
   const modifyRecipe = (editRecipe) => {
     console.log(editRecipe);
@@ -35,9 +55,20 @@ function App() {
       })
     );
   };
+  const modifyContact = (editContact) => {
+    setContacts(
+      contacts.map((contact) => {
+        return contact.id === editContact.id ? editContact : contact;
+      })
+    );
+  };
   const removeRecipe = (id) => {
     const newRecipe = recipes.filter((recipe) => recipe.id !== id);
     setRecipes(newRecipe);
+  };
+  const removeContact = (id) => {
+    const newContact = contacts.filter((contact) => contact.id !== id);
+    setContacts(newContact);
   };
 
   useEffect(() => {
@@ -46,8 +77,19 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const loadedContact = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_KEY_CONTACT)
+    );
+    if (loadedContact) setContacts(loadedContact);
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(recipes));
   }, [recipes]);
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY_CONTACT, JSON.stringify(contacts));
+  }, [contacts]);
 
   return (
     <div>
@@ -80,18 +122,41 @@ function App() {
             }
           />
           <Route
+            path="/ContactAppHome"
+            element={
+              <>
+                <ContactHeader />
+                <ContactList contacts={contacts} />
+              </>
+            }
+          />
+          <Route
             path="/AddRecipe"
             element={<AddRecipe addRecipe={addRecipe} />}
+          />
+          <Route
+            path="/AddContact"
+            element={<AddContact addContact={addContact} />}
           />
           <Route
             path="/editRecipe"
             element={<EditRecipe modifyRecipe={modifyRecipe} />}
           />
           <Route
+            path="/editContact"
+            element={<EditContact modifyContact={modifyContact} />}
+          />
+          <Route
             path="/modal"
             element={<Modal removeRecipe={removeRecipe} />}
           />
+          <Route
+            path="/ContactModal"
+            element={<ContactModal removeContact={removeContact} />}
+          />
+
           <Route path="/recipeDetail" element={<RecipeDetail />} />
+          <Route path="/contactDetail" element={<ContactDetail />} />
         </Routes>
       </Router>
     </div>

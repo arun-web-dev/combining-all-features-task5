@@ -1,6 +1,9 @@
 import React from "react";
 import Card from "../Components/Card";
-const RecipeList = ({ recipes, optionalRecipe }) => {
+const RecipeList = ({ recipes, showModal }) => {
+  const modalShow = (props) => {
+    showModal(props);
+  };
   return (
     <div className="RecipeListApp">
       {recipes.length === 0 ? (
@@ -10,7 +13,9 @@ const RecipeList = ({ recipes, optionalRecipe }) => {
           .map((recipe) => {
             return (
               <Card
+                modalShow={modalShow}
                 key={recipe.id}
+                id={recipe.id}
                 class="recipe-container"
                 image={recipe.image}
                 publisher={recipe.publisher}

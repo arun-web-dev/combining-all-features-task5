@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import RecipeList from "./RecipeList";
 import { recipes } from "../API/recipe";
 import SearchBox from "./Searchbox";
+import RecipeDetail from "./RecipeDetail";
 
 export class App extends Component {
   state = {
     recipes: recipes,
     searchField: "",
+    showModalRecipe: "",
+    modalIsActive: false,
   };
 
   onSearchChange = (event) => {
@@ -35,13 +38,30 @@ export class App extends Component {
           };
         }))
       );
-      
     } catch (error) {
       console.error(`Error from model: ${error}`);
       throw error;
     }
   };
 
+  showModal = (props) => {
+    this.setState({
+      showModalRecipe: {
+        id: props.id,
+        title: props.title,
+        publisher: props.publisher,
+        image: props.image,
+      },
+      modalIsActive: true,
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      showModalRecipe: "",
+      modalIsActive: false,
+    });
+  };
   render() {
     const filteredRecipe = this.state.recipes.filter((recipe) => {
       return recipe.title
@@ -49,14 +69,27 @@ export class App extends Component {
         .includes(this.state.searchField.toLowerCase());
     });
     return (
-      <div className="tc code">
-        <h1 className="f1 ma3 washed-blue">Recipe Finder</h1>
-        <SearchBox
-          searchChange={this.onSearchChange}
-          submitRecipe={this.onSubmitRecipe}
-        />
-        <RecipeList recipes={filteredRecipe} optionalRecipe={recipes} />
-      </div>
+      <>
+        {this.state.modalIsActive ? (
+          <RecipeDetail
+            recipe={this.state.showModalRecipe}
+            closeModal={this.closeModal}
+          />
+        ) : (
+          <div className="tc code">
+            <h1 className="f1 ma3">Recipe Finder</h1>
+            <SearchBox
+              searchChange={this.onSearchChange}
+              submitRecipe={this.onSubmitRecipe}
+            />
+            <RecipeList
+              recipes={filteredRecipe}
+              showModal={this.showModal}
+              optionalRecipe={recipes}
+            />
+          </div>
+        )}
+      </>
     );
   }
 }

@@ -1,6 +1,14 @@
-const Card = ({ image, title, publisher }) => {
+const Card = (props) => {
+  const { image, title, publisher, modalShow } = props;
+  const showModal = () => {
+    modalShow(props);
+  };
+
   return (
-    <div className="bg-light-green dib br3 pa3 ma2 grow bw2 tc shadow-5 recipe-container">
+    <div
+      className="bg-light-green dib br3 pa3 ma2 grow bw2 tc shadow-5 recipe-container"
+      onClick={showModal}
+    >
       <img
         src={image}
         alt={title}
