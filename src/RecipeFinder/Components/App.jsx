@@ -10,6 +10,7 @@ export class App extends Component {
     searchField: "",
     showModalRecipe: "",
     modalIsActive: false,
+    
   };
 
   onSearchChange = (event) => {

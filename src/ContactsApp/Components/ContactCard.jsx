@@ -29,7 +29,7 @@ export const ContactCard = (props) => {
           }}
         >
           <h1 className="f6 f5-ns fw6 lh-title black mv0">{name} </h1>
-          <h2 className="f6 fw4 mt0 mb0 black-60">{email}</h2>
+          <h2 className="f6 fw4 mt2 mb0 black-60">{email}</h2>
         </div>
         <div className="dtc v-mid">
           <form className="w-100 tr">

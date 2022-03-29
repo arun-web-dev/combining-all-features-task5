@@ -16,7 +16,7 @@ export default function Nabvar() {
         {navLinks.map((link, index) => (
           <a
             key={index}
-            className="link dim gray f4 f4-ns dib mr4 pointer"
+            className="link dim  gray f4 f4-ns dib mr4 pointer "
             title={link}
             onClick={(e) => {
               e.preventDefault();
