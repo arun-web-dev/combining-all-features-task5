@@ -1,34 +1,29 @@
 import { Component } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
-export default class AddRecipe extends Component {
+class EditRecipe extends Component {
   constructor(props) {
     super(props);
+    const { title, publisher } = this.props.location.state.recipe;
     this.state = {
-      title: "",
-      publisher: "",
+      title: `${title}`,
+      publisher: `${publisher}`,
       isActive: false,
     };
   }
 
-  updateRecipe = (e) => {
+  editRecipe = (e) => {
     e.preventDefault();
     const { title, publisher } = this.state;
-    if (!title || !publisher) return;
-    this.props.addRecipe({ title, publisher });
+    const { id } = this.props.location.state.recipe;
+    if (!this.state.title || !this.state.publisher) return;
+    this.props.modifyRecipe({ title, publisher, id });
     this.setState({
       title: "",
       publisher: "",
       isActive: true,
     });
   };
-
-  changeState = (e) => {
-    const { id, value } = e.target;
-    id === "title" && this.setState({ title: value });
-    id === "publisher" && this.setState({ publisher: value });
-  };
-
   render() {
     const { title, publisher, isActive } = this.state;
     return (
@@ -36,16 +31,20 @@ export default class AddRecipe extends Component {
         {isActive ? (
           <Navigate to="/RecipesNoteHome" />
         ) : (
-          <main className="pa4 black-80 mw6  mt4 center shadow-1">
-            <form className="measure center" onSubmit={this.updateRecipe}>
+          <main className="pa4 black-80 mw6 mt4  center shadow-1">
+            <form className="measure center" onSubmit={this.editRecipe}>
               <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-                <legend className="f4 fw6 ph0 mh0">Add Recipe</legend>
+                <legend className="f4 fw6 ph0 mh0">Edit Recipe</legend>
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6" htmlFor="title">
                     Title
                   </label>
                   <input
-                    onChange={this.changeState}
+                    onChange={(e) =>
+                      this.setState({
+                        title: e.target.value,
+                      })
+                    }
                     className="pa2 input-reset ba bg-transparent  w-100"
                     type="text"
                     name={title}
@@ -60,21 +59,25 @@ export default class AddRecipe extends Component {
                     Publisher
                   </label>
                   <input
-                    value={publisher}
-                    onChange={this.changeState}
+                    onChange={(e) =>
+                      this.setState({
+                        publisher: e.target.value,
+                      })
+                    }
                     className="pa2 input-reset ba bg-transparent  w-100"
                     type="text"
                     id="publisher"
+                    value={publisher}
                     placeholder="add your name to publish"
                     required
                   />
                 </div>
               </fieldset>
-              <div className="">
+              <div>
                 <input
                   className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                   type="submit"
-                  value="Add Recipe"
+                  value="Update Recipe"
                 />
               </div>
             </form>
@@ -83,4 +86,8 @@ export default class AddRecipe extends Component {
       </>
     );
   }
+}
+export default function (props) {
+  const location = useLocation();
+  return <EditRecipe {...props} location={location} />;
 }

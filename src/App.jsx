@@ -11,7 +11,7 @@ import { v4 as uuidV4 } from "uuid";
 import EditRecipe from "./RecipeNotes/Components/EditRecipe";
 import { Modal } from "./RecipeNotes/Components/Modal";
 import { RecipeDetail } from "./RecipeNotes/Components/RecipeDetail";
-import { AddContact } from "./ContactsApp/Components/AddContact";
+import AddContact from "./ContactsApp/Components/AddContact";
 import EditContact from "./ContactsApp/Components/EditContact";
 import { ContactDetail } from "./ContactsApp/Components/ContactDetail";
 import { ContactModal } from "./ContactsApp/Components/ContactModal";
@@ -140,11 +140,18 @@ function App() {
           />
           <Route
             path="/editRecipe"
-            element={<EditRecipe modifyRecipe={modifyRecipe} />}
+            element={
+              <EditRecipe modifyRecipe={modifyRecipe} addRecipe={addRecipe} />
+            }
           />
           <Route
             path="/editContact"
-            element={<EditContact modifyContact={modifyContact} />}
+            element={
+              <EditContact
+                modifyContact={modifyContact}
+                addContact={addContact}
+              />
+            }
           />
           <Route
             path="/modal"

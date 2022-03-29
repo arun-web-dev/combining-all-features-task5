@@ -36,7 +36,9 @@ export const ContactCard = (props) => {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                navigate("/editContact", { state: { contact: props.contact } });
+                navigate("/editContact", {
+                  state: { contact: props.contact, edit: "edit" },
+                });
               }}
               className="f6 button-reset bg-white ba b--black-10 mr2  dim pointer pv1 ph2 black-60"
             >

@@ -10,7 +10,6 @@ export class App extends Component {
     searchField: "",
     showModalRecipe: "",
     modalIsActive: false,
-    
   };
 
   onSearchChange = (event) => {
@@ -46,6 +45,8 @@ export class App extends Component {
   };
 
   showModal = (props) => {
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${window.scrollY}px`;
     this.setState({
       showModalRecipe: {
         id: props.id,
@@ -58,6 +59,10 @@ export class App extends Component {
   };
 
   closeModal = () => {
+    const scrollY = document.body.style.top;
+    document.body.style.position = "";
+    document.body.style.top = "";
+    window.scrollTo(0, parseInt(scrollY || "0") * -1);
     this.setState({
       showModalRecipe: "",
       modalIsActive: false,
@@ -71,25 +76,26 @@ export class App extends Component {
     });
     return (
       <>
-        {this.state.modalIsActive ? (
+        {this.state.showModalRecipe ? (
           <RecipeDetail
             recipe={this.state.showModalRecipe}
             closeModal={this.closeModal}
           />
         ) : (
-          <div className="tc code">
-            <h1 className="f1 ma3">Recipe Finder</h1>
-            <SearchBox
-              searchChange={this.onSearchChange}
-              submitRecipe={this.onSubmitRecipe}
-            />
-            <RecipeList
-              recipes={filteredRecipe}
-              showModal={this.showModal}
-              optionalRecipe={recipes}
-            />
-          </div>
+          ""
         )}
+        <div className="tc code">
+          <h1 className="f1 ma3">Recipe Finder</h1>
+          <SearchBox
+            searchChange={this.onSearchChange}
+            submitRecipe={this.onSubmitRecipe}
+          />
+          <RecipeList
+            recipes={filteredRecipe}
+            showModal={this.showModal}
+            optionalRecipe={recipes}
+          />
+        </div>
       </>
     );
   }
