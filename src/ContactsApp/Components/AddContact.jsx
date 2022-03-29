@@ -36,6 +36,7 @@ export class AddContact extends Component {
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6">Name</label>
                   <input
+                    maxLength="25"
                     onChange={(e) => {
                       const { value, maxLength } = e.target;
                       this.setState({
@@ -44,7 +45,6 @@ export class AddContact extends Component {
                     }}
                     className="pa2 input-reset ba bg-transparent  w-100"
                     type="text"
-                    name={name}
                     id="title"
                     value={name}
                     required

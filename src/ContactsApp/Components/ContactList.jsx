@@ -6,7 +6,7 @@ export const ContactList = ({ contacts, removeContact }) => {
     <ContactCard key={contact.id} contact={contact} />
   ));
   return (
-    <div className="flex  pa3 mw6 shadow-1 br2 center">
+    <div className="flex flex-column pa3 mw6 shadow-1 br2 center">
       <div className="flex justify-around items-center pa3 w-100 center">
         <h2>Contact List </h2>
         <Link to="/addContact">
