@@ -22,6 +22,11 @@ export default class AddRecipe extends Component {
       isActive: true,
     });
   };
+
+  changeSetState = (e) => {
+    console.log(e);
+  };
+
   render() {
     const { title, publisher, isActive } = this.state;
     return (
@@ -38,11 +43,7 @@ export default class AddRecipe extends Component {
                     Title
                   </label>
                   <input
-                    onChange={(e) =>
-                      this.setState({
-                        title: e.target.value,
-                      })
-                    }
+                    onChange={changeSetState}
                     className="pa2 input-reset ba bg-transparent  w-100"
                     type="text"
                     name={title}
