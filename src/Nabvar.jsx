@@ -21,17 +21,24 @@ export default function Nabvar() {
       {link}
     </a>
   ));
+
   const navLinksSelector = document.querySelectorAll(".nav-link");
+
+  useEffect(() => {
+    const navLinksSelectors = document.querySelectorAll(".nav-link");
+    navLinksSelectors[0].classList.add("nav-link-active");
+
+    return () => {
+      navLinksSelectors[0].classList.remove("nav-link-active");
+    };
+  }, []);
+
   const activeClassToggler = (e) => {
     for (let navLink of navLinksSelector) {
       navLink.classList.remove("nav-link-active");
     }
     e.target.classList.add("nav-link-active");
   };
-
-  useEffect(() => {
-    console.log(navLinksLists);
-  }, []);
 
   return (
     <nav className=" flex pv3 justify-around items-end">
