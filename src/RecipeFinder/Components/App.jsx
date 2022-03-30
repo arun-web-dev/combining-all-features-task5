@@ -74,10 +74,13 @@ export class App extends Component {
     document.body.style.position = "";
     document.body.style.top = "";
     window.scrollTo(0, parseInt(scrollY || "0") * -1);
-    this.setState({
-      showModalRecipe: "",
-      modalIsActive: false,
-    });
+    document.querySelector(".recipe-modal").classList.add("no-active");
+    setTimeout(() => {
+      this.setState({
+        showModalRecipe: "",
+        modalIsActive: false,
+      });
+    }, 500);
   };
 
   render() {
@@ -96,17 +99,20 @@ export class App extends Component {
         ) : (
           ""
         )}
-        <div className="tc code recipe-finder">
+        <div className="tc code ">
           <h1 className="f1 ma3">Recipe Finder</h1>
-          <SearchBox
-            searchChange={this.onSearchChange}
-            submitRecipe={this.onSubmitRecipe}
-          />
-          <RecipeList
-            recipes={filteredRecipe}
-            showModal={this.showModal}
-            optionalRecipe={recipes}
-          />
+          <div className="recipe-finder">
+            <SearchBox
+              searchChange={this.onSearchChange}
+              submitRecipe={this.onSubmitRecipe}
+            />
+
+            <RecipeList
+              recipes={filteredRecipe}
+              showModal={this.showModal}
+              optionalRecipe={recipes}
+            />
+          </div>
         </div>
       </>
     );

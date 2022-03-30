@@ -1,10 +1,15 @@
+import { useEffect } from "react";
+
 export default function RecipeDetail(props) {
   const { image, title } = props.recipe;
+
+  useEffect(() => {
+    document.querySelector(".recipe-modal").classList.add("active");
+    
+  }, []);
   return (
-    <div
-      className="recipe-modal flex jusify-center items-center "
-      onClick={props.closeModal}
-    >
+    <div className="recipe-modal flex jusify-center items-center">
+      <div className="recipe-modal-bg" onClick={props.closeModal}></div>
       <article className="mw6 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10 close-btn ">
         <div className="close-btn-before grow dim " onClick={props.closeModal}>
           X
