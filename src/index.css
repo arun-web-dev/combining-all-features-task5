@@ -64,12 +64,41 @@ img {
 
 .link.nav-link {
   transition: all 0.3s;
+  position: relative;
+  user-select: none;
 }
+
+.nav-link::after {
+  content: "";
+  width: 0px;
+  height: 3px;
+  position: absolute;
+  bottom: -5px;
+  background-color: #000;
+  left: 0;
+  transition: all 0.5s;
+  transform-origin: center;
+}
+
+.nav-link.nav-link-active::after {
+  content: "";
+  width: 100%;
+  height: 3px;
+  position: absolute;
+  bottom: -5px;
+  background-color: #000;
+  left: 0;
+  transition: all 0.5s;
+  transform-origin: center;
+  border-radius: 6px;
+}
+
 .link.nav-link:hover {
   color: #000;
   transform: translateY(-2px);
   transition: all 0.3s;
 }
+
 .nav-link:active {
   transform: translateY(1px);
   transition: all 0.3s;
@@ -78,4 +107,19 @@ img {
 .nav-link.nav-link-active {
   color: #000;
   transition: all 0.3s;
+}
+
+.recipe-notes,
+.recipe-finder,
+.contact-notes {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.5s;
+}
+
+.recipe-notes.active,
+.recipe-finder.active,
+.contact-notes.active {
+  transform: scale(1);
+  opacity: 1;
 }

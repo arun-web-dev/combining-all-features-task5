@@ -43,7 +43,18 @@ export class App extends Component {
       throw error;
     }
   };
-
+  componentDidMount() {
+    setTimeout(
+      () => document.querySelector(".recipe-finder").classList.add("active"),
+      100
+    );
+  }
+  componentWillUnmount() {
+    setTimeout(
+      () => document.querySelector(".recipe-finder").classList.remove("active"),
+      100
+    );
+  }
   showModal = (props) => {
     document.body.style.position = "fixed";
     document.body.style.top = `-${window.scrollY}px`;
@@ -68,6 +79,7 @@ export class App extends Component {
       modalIsActive: false,
     });
   };
+
   render() {
     const filteredRecipe = this.state.recipes.filter((recipe) => {
       return recipe.title
@@ -84,7 +96,7 @@ export class App extends Component {
         ) : (
           ""
         )}
-        <div className="tc code">
+        <div className="tc code recipe-finder">
           <h1 className="f1 ma3">Recipe Finder</h1>
           <SearchBox
             searchChange={this.onSearchChange}
