@@ -23,7 +23,7 @@ export const RecipeList = ({ recipes, removeRecipe }) => {
           </div>
         </Link>
       </div>
-      {RecipeCards}
+      <div className="recipe-card pr2">{RecipeCards}</div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { InputElement } from "./InputElement";
 
 class EditRecipe extends Component {
   constructor(props) {
@@ -36,6 +37,10 @@ class EditRecipe extends Component {
     this.setState({
       title: "",
       publisher: "",
+      formErrors: { email: "", password: "" },
+      emailisValid: false,
+      passwordisValid: false,
+      formValid: false,
       isActive: true,
     });
   };
@@ -51,6 +56,7 @@ class EditRecipe extends Component {
   };
 
   changeState = (e) => {
+    console.log("im called", e);
     const { id, value, maxLength } = e.target;
     id === "title" && this.setState({ title: value.slice(0, maxLength) });
     id === "publisher" &&
@@ -81,38 +87,43 @@ class EditRecipe extends Component {
                 </legend>
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6">Title</label>
-                  <input
-                    maxLength="20"
-                    onChange={this.changeState}
-                    className="pa2 input-reset ba bg-transparent  w-100"
-                    type="text"
-                    name={title}
-                    id="title"
+                  <InputElement
                     value={title}
-                    required
+                    type="text"
+                    id="title"
+                    onChange={this.changeState.bind(this.changeState)}
                     placeholder="enter title"
                   />
                 </div>
                 <div className="mv3">
                   <label className="db fw6 lh-copy f6">Publisher</label>
-                  <input
-                    maxLength="30"
-                    onChange={this.changeState}
-                    className="pa2 input-reset ba bg-transparent  w-100"
-                    type="text"
-                    id="publisher"
+                  <InputElement
                     value={publisher}
+                    id="publisher"
+                    onChange={this.changeState.bind(this.changeState)}
                     placeholder="enter your name to publish"
-                    required
                   />
                 </div>
               </fieldset>
               <div>
-                <input
+                <button
                   className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                   type="submit"
-                  value={this.titleSelector()}
-                />
+                >
+                  {this.titleSelector()}
+                </button>
+                <button
+                  className="b ph3 pv2 ml3 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({
+                      isActive: true,
+                    });
+                  }}
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           </main>

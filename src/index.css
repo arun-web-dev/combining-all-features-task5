@@ -8,6 +8,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -23,6 +33,7 @@ body {
   border-radius: 2px;
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
+  height: 30px;
 }
 
 code {
@@ -39,12 +50,20 @@ div#root {
   font-family: "Pacifico", cursive;
 }
 
+.recipe-finder-container {
+  height: 80vh;
+  overflow-y: scroll;
+}
+.recipe-finder-container::-webkit-scrollbar {
+  display: none;
+}
+
 .RecipeListApp {
-  height: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  overflow-y: scroll;
 }
 
 img {
@@ -161,9 +180,8 @@ img {
   color: #000;
   transition: all 0.3s;
 }
-
-.recipe-notes,
 .recipe-finder,
+.recipe-notes,
 .contact-notes,
 .edit-recipe,
 .edit-contact,
@@ -173,9 +191,24 @@ img {
   transform: scale(0.95);
   transition: all 0.5s;
 }
+.recipe-card {
+  overflow-y: scroll;
+  height: 50vh;
+}
+.recipe-card::-webkit-scrollbar {
+  display: none;
+}
 
-.recipe-notes.active,
+.contact-card {
+  overflow-y: scroll;
+  height: 50vh;
+}
+.contact-card::-webkit-scrollbar {
+  display: none;
+}
+
 .recipe-finder.active,
+.recipe-notes.active,
 .contact-notes.active,
 .edit-recipe.active,
 .edit-contact.active,

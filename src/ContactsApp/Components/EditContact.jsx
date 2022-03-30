@@ -1,5 +1,7 @@
 import { Component } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { InputElement } from "../../RecipeNotes/Components/InputElement";
+InputElement;
 
 class EditContact extends Component {
   constructor(props) {
@@ -80,38 +82,43 @@ class EditContact extends Component {
                 </legend>
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6">Name</label>
-                  <input
-                    maxLength="20"
-                    onChange={this.changeState}
-                    className="pa2 input-reset ba bg-transparent  w-100"
-                    type="text"
-                    name={name}
-                    id="name"
+                  <InputElement
                     value={name}
-                    required
+                    id="name"
+                    onChange={this.changeState.bind(this.changeState)}
                     placeholder="enter your name"
                   />
                 </div>
                 <div className="mv3">
                   <label className="db fw6 lh-copy f6">Phone Number</label>
-                  <input
-                    maxLength="12"
-                    onChange={this.changeState}
-                    className="pa2 input-reset ba bg-transparent  w-100"
+                  <InputElement
+                    value={email}
                     type="number"
                     id="email"
-                    value={email}
+                    onChange={this.changeState.bind(this.changeState)}
                     placeholder="enter your number"
-                    required
                   />
                 </div>
               </fieldset>
               <div>
-                <input
+                <button
                   className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                   type="submit"
-                  value={this.titleSelector()}
-                />
+                >
+                  {this.titleSelector()}
+                </button>
+                <button
+                  className="b ph3 pv2 ml3 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({
+                      isActive: true,
+                    });
+                  }}
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           </main>

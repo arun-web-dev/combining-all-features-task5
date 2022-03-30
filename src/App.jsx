@@ -150,7 +150,12 @@ function App() {
           />
           <Route
             path="/ContactModal"
-            element={<ContactModal removeContact={removeContact} />}
+            element={
+              <ContactModal
+                removeContact={removeContact}
+                removeRecipe={removeRecipe}
+              />
+            }
           />
 
           <Route path="/recipeDetail" element={<RecipeDetail />} />

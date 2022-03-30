@@ -15,8 +15,8 @@ const Card = (props) => {
         style={{ width: "200px", height: "200px" }}
       />
       <div>
-        <h2 className="f4 ma1">{title}</h2>
-        <p>{publisher}</p>
+        <h2 className="f5 ma1">{title}</h2>
+        <p className="f5 ma1">{publisher}</p>
       </div>
     </div>
   );

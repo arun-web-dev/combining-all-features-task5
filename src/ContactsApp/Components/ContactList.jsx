@@ -23,7 +23,7 @@ export const ContactList = ({ contacts, removeContact }) => {
           </div>
         </Link>
       </div>
-      {ContactCards}
+      <div className="contact-card pr2">{ContactCards}</div>
     </div>
   );
 };

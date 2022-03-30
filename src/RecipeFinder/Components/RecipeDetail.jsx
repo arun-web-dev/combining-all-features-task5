@@ -5,11 +5,10 @@ export default function RecipeDetail(props) {
 
   useEffect(() => {
     document.querySelector(".recipe-modal").classList.add("active");
-    
   }, []);
   return (
     <div className="recipe-modal flex jusify-center items-center">
-      <div className="recipe-modal-bg" onClick={props.closeModal}></div>
+      <div className="recipe-modal-bg"></div>
       <article className="mw6 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10 close-btn ">
         <div className="close-btn-before grow dim " onClick={props.closeModal}>
           X

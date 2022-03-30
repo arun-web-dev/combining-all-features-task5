@@ -94,7 +94,7 @@ export class App extends Component {
         ) : (
           ""
         )}
-        <div className="tc code ">
+        <div className="tc code recipe-finder-container ">
           <h1 className="f1 ma3">Recipe Finder</h1>
           <div className="recipe-finder">
             <SearchBox
