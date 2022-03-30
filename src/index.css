@@ -193,7 +193,7 @@ img {
 }
 .recipe-card {
   overflow-y: scroll;
-  height: 50vh;
+  max-height: 50vh;
 }
 .recipe-card::-webkit-scrollbar {
   display: none;
@@ -201,7 +201,7 @@ img {
 
 .contact-card {
   overflow-y: scroll;
-  height: 50vh;
+  max-height: 50vh;
 }
 .contact-card::-webkit-scrollbar {
   display: none;

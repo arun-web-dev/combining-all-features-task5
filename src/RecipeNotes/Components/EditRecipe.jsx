@@ -53,6 +53,7 @@ class EditRecipe extends Component {
 
   changeState = (e) => {
     const { value, name } = e.target;
+    
     this.setState({
       [name]: value,
     });

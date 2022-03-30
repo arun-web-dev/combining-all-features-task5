@@ -13,6 +13,12 @@ class EditContact extends Component {
       name: name ? `${name}` : "",
       email: email ? `${email}` : "",
       isActive: false,
+      nameIsValid: false,
+      numberIsValid: false,
+      error: {
+        name: "",
+        number: "",
+      },
       add,
     };
   }
@@ -53,9 +59,52 @@ class EditContact extends Component {
   };
 
   changeState = (e) => {
-    const { id, value, maxLength } = e.target;
-    id === "name" && this.setState({ name: value.slice(0, maxLength) });
-    id === "email" && this.setState({ email: value.slice(0, maxLength) });
+    e.persist();
+    const { id, value } = e.target;
+    id === "name" && this.setState({ name: value });
+    id === "email" && this.setState({ email: +value });
+
+    if (id === "email") {
+      if (this.state.email.toString().length === 9) {
+        this.setState({
+          error: {
+            number: "Number is valid",
+          },
+          numberIsValid: true,
+        });
+      } else {
+        this.setState({
+          error: {
+            number: "Enter a valid 10 digit mobile number",
+          },
+          numberIsValid: false,
+        });
+      }
+    }
+
+    if (id === "name") {
+      if (this.state.name.length > 15) {
+        this.setState({
+          nameIsValid: true,
+          error: {
+            name: "Name must below 20 characters long",
+          },
+        });
+      } else {
+        this.setState({
+          nameIsValid: false,
+          error: {
+            name: "",
+          },
+        });
+      }
+    }
+  };
+  cancelContactHanler = (e) => {
+    e.preventDefault();
+    this.setState({
+      isActive: true,
+    });
   };
 
   componentDidMount() {
@@ -88,34 +137,49 @@ class EditContact extends Component {
                     onChange={this.changeState.bind(this.changeState)}
                     placeholder="enter your name"
                   />
+                  <div
+                    className={
+                      !this.state.nameIsValid ? "mt2 red" : "mt2 green b"
+                    }
+                  >
+                    {this.state.error.name}
+                  </div>
                 </div>
                 <div className="mv3">
                   <label className="db fw6 lh-copy f6">Phone Number</label>
                   <InputElement
                     value={email}
-                    type="number"
+                    type="tel"
                     id="email"
                     onChange={this.changeState.bind(this.changeState)}
-                    placeholder="enter your number"
+                    placeholder="enter numbers only"
                   />
+
+                  <div
+                    className={
+                      !this.state.numberIsValid ? "mt2 red" : "mt2 green b"
+                    }
+                  >
+                    {this.state.error.number}
+                  </div>
                 </div>
               </fieldset>
               <div>
                 <button
-                  className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                  className={
+                    !this.state.numberIsValid
+                      ? "b ph3 pv2 input-reset ba b--black bg-transparent pointer f6 dib"
+                      : "b ph3 pv2 input-reset ba b--black bg-transparent grow  pointer f6 dib"
+                  }
                   type="submit"
+                  disabled={!this.state.numberIsValid}
                 >
                   {this.titleSelector()}
                 </button>
                 <button
                   className="b ph3 pv2 ml3 input-reset ba b--black bg-transparent grow pointer f6 dib"
                   type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.setState({
-                      isActive: true,
-                    });
-                  }}
+                  onClick={this.cancelContactHanler}
                 >
                   Cancel
                 </button>
