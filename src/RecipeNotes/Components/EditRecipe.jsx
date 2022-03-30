@@ -56,6 +56,13 @@ class EditRecipe extends Component {
     id === "publisher" &&
       this.setState({ publisher: value.slice(0, maxLength) });
   };
+
+  componentDidMount() {
+    setTimeout(() => {
+      document.querySelector(".edit-recipe").classList.add("active");
+    }, 50);
+  }
+
   render() {
     const { title, publisher, isActive } = this.state;
     return (
@@ -63,7 +70,7 @@ class EditRecipe extends Component {
         {isActive ? (
           <Navigate to="/RecipesNoteHome" />
         ) : (
-          <main className="pa4 black-80 mw6 mt4 center shadow-1">
+          <main className="pa4 black-80 mw6 mt4 center shadow-1 edit-recipe">
             <form
               className="measure center"
               onSubmit={this.recipeFunctionSelector}

@@ -10,9 +10,6 @@ export const RecipeList = ({ recipes, removeRecipe }) => {
     setTimeout(() => {
       document.querySelector(".recipe-notes").classList.add("active");
     }, 100);
-
-    return () =>
-      document.querySelector(".recipe-notes").classList.remove("active");
   }, []);
   return (
     <div className="flex flex-column  pa3 mw6 shadow-1 br2 center recipe-notes">

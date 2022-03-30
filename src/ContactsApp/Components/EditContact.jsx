@@ -55,6 +55,13 @@ class EditContact extends Component {
     id === "name" && this.setState({ name: value.slice(0, maxLength) });
     id === "email" && this.setState({ email: value.slice(0, maxLength) });
   };
+
+  componentDidMount() {
+    setTimeout(() => {
+      document.querySelector(".edit-contact").classList.add("active");
+    }, 50);
+  }
+
   render() {
     const { name, email, isActive } = this.state;
     return (
@@ -62,7 +69,7 @@ class EditContact extends Component {
         {isActive ? (
           <Navigate to="/ContactAppHome" />
         ) : (
-          <main className="pa4 black-80 mw6 mt4 center shadow-1">
+          <main className="pa4 black-80 mw6 mt4 center shadow-1 edit-contact">
             <form
               className="measure center"
               onSubmit={this.contactFunctionSelector}

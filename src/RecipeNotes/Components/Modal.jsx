@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Modal = ({ removeRecipe }) => {
   const navigate = useNavigate();
@@ -12,8 +13,12 @@ export const Modal = ({ removeRecipe }) => {
         })();
   };
 
+  useEffect(() => {
+    document.querySelector(".recipeModal").classList.add("active");
+  }, []);
+
   return (
-    <div className="flex flex-column justify-center align-center mw6 shadow-1 br2 center h--100 ">
+    <div className="flex flex-column justify-center align-center mw6 shadow-1 br2 center h--100 recipeModal">
       <div className="center">
         <h1>Are you Sure want to delete?</h1>
       </div>

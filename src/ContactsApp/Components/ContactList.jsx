@@ -10,8 +10,6 @@ export const ContactList = ({ contacts, removeContact }) => {
     setTimeout(() => {
       document.querySelector(".contact-notes").classList.add("active");
     }, 100);
-    return () =>
-      document.querySelector(".contact-notes").classList.remove("active");
   }, []);
   return (
     <div className="flex flex-column pa3 mw6 shadow-1 br2 center contact-notes">

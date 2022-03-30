@@ -49,12 +49,7 @@ export class App extends Component {
       100
     );
   }
-  componentWillUnmount() {
-    setTimeout(
-      () => document.querySelector(".recipe-finder").classList.remove("active"),
-      100
-    );
-  }
+
   showModal = (props) => {
     document.body.style.position = "fixed";
     document.body.style.top = `-${window.scrollY}px`;

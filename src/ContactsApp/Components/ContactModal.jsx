@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
 export const ContactModal = ({ removeContact }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,9 +11,12 @@ export const ContactModal = ({ removeContact }) => {
     e.preventDefault();
     navigate("/ContactAppHome");
   };
+  useEffect(() => {
+    document.querySelector(".contactModal").classList.add("active");
+  }, []);
 
   return (
-    <div className="flex flex-column justify-center align-center mw6 shadow-1 br2 center h--100 ">
+    <div className="flex flex-column justify-center align-center mw6 shadow-1 br2 center h--100 contactModal ">
       <div className="center">
         <h1>Are you Sure want to delete?</h1>
       </div>
