@@ -37,10 +37,6 @@ class EditRecipe extends Component {
     this.setState({
       title: "",
       publisher: "",
-      formErrors: { email: "", password: "" },
-      emailisValid: false,
-      passwordisValid: false,
-      formValid: false,
       isActive: true,
     });
   };
@@ -56,11 +52,10 @@ class EditRecipe extends Component {
   };
 
   changeState = (e) => {
-    console.log("im called", e);
-    const { id, value, maxLength } = e.target;
-    id === "title" && this.setState({ title: value.slice(0, maxLength) });
-    id === "publisher" &&
-      this.setState({ publisher: value.slice(0, maxLength) });
+    const { value, name } = e.target;
+    this.setState({
+      [name]: value,
+    });
   };
 
   componentDidMount() {
@@ -88,6 +83,7 @@ class EditRecipe extends Component {
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6">Title</label>
                   <InputElement
+                    name="title"
                     value={title}
                     type="text"
                     id="title"
@@ -98,6 +94,7 @@ class EditRecipe extends Component {
                 <div className="mv3">
                   <label className="db fw6 lh-copy f6">Publisher</label>
                   <InputElement
+                    name="publisher"
                     value={publisher}
                     id="publisher"
                     onChange={this.changeState.bind(this.changeState)}
@@ -109,6 +106,7 @@ class EditRecipe extends Component {
                 <button
                   className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                   type="submit"
+                  // disabled={!this.state.formValid}
                 >
                   {this.titleSelector()}
                 </button>
