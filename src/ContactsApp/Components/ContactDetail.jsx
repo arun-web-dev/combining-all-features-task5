@@ -12,9 +12,7 @@ export const ContactDetail = () => {
           <a className="f2 db link dark-blue hover-blue">{name}</a>
           <p className="f4 gray mv1">{email}</p>
           <a
-            onClick={() => {
-              navigate("/ContactAppHome");
-            }}
+            onClick={() => navigate("/ContactAppHome")}
             className="link tc ph3 pv2 mt3 db bg-animate bg-dark-blue hover-bg-blue white f6 br1 pointer"
           >
             Back to home

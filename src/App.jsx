@@ -6,16 +6,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Header } from "./RecipeNotes/Components/Header";
 import { RecipeList } from "./RecipeNotes/Components/RecipeList";
 import { ContactList } from "./ContactsApp/Components/ContactList";
-import AddRecipe from "./RecipeNotes/Components/AddRecipe";
 import { v4 as uuidV4 } from "uuid";
 import EditRecipe from "./RecipeNotes/Components/EditRecipe";
 import { Modal } from "./RecipeNotes/Components/Modal";
 import { RecipeDetail } from "./RecipeNotes/Components/RecipeDetail";
-import AddContact from "./ContactsApp/Components/AddContact";
 import EditContact from "./ContactsApp/Components/EditContact";
 import { ContactDetail } from "./ContactsApp/Components/ContactDetail";
 import { ContactModal } from "./ContactsApp/Components/ContactModal";
 import { ContactHeader } from "./ContactsApp/Components/ContactHeader";
+
 function App() {
   // states for RecipeList App
   const LOCAL_STORAGE_KEY = "recipes";
@@ -129,14 +128,6 @@ function App() {
                 <ContactList contacts={contacts} />
               </>
             }
-          />
-          <Route
-            path="/AddRecipe"
-            element={<AddRecipe addRecipe={addRecipe} />}
-          />
-          <Route
-            path="/AddContact"
-            element={<AddContact addContact={addContact} />}
           />
           <Route
             path="/editRecipe"

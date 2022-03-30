@@ -3,6 +3,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 export const ContactModal = ({ removeContact }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const deleteContactHandler = (e) => {
+    removeContact(location.state.id);
+    navigate("/ContactAppHome");
+  };
+  const navigateToContactAppHome = (e) => {
+    e.preventDefault();
+    navigate("/ContactAppHome");
+  };
+
   return (
     <div className="flex flex-column justify-center align-center mw6 shadow-1 br2 center h--100 ">
       <div className="center">
@@ -11,10 +20,7 @@ export const ContactModal = ({ removeContact }) => {
       <div className="flex justify-center">
         <div className="pointer">
           <a
-            onClick={(e) => {
-              removeContact(location.state.id);
-              navigate("/ContactAppHome");
-            }}
+            onClick={deleteContactHandler}
             className="f6 link dim br2 ph3 pv2 mb2 dib white bg-navy"
           >
             Confirm
@@ -22,11 +28,8 @@ export const ContactModal = ({ removeContact }) => {
         </div>
         <div className="pointer">
           <a
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/ContactAppHome");
-            }}
-            className="f6 link dim br2 ph3 pv2 mb2 dib white bg-navy ml2"
+            onClick={navigateToContactAppHome}
+            className="f6 link dim br2 ph3 pv2 mb2 dib white bg-navy ml2 cancel"
           >
             Cancel
           </a>
