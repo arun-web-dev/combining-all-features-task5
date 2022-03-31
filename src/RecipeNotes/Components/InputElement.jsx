@@ -13,6 +13,7 @@ export function InputElement(props) {
       value={props.value ? props.value : ""}
       onChange={props.onChange ? props.onChange : ""}
       placeholder={props.placeholder ? props.placeholder : ""}
+      autoComplete={props.autoComplete ? props.autoComplete : "off"}
       required
     />
   );

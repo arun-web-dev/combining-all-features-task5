@@ -53,10 +53,14 @@ div#root {
 .recipe-finder-container {
   height: 80vh;
   overflow-y: scroll;
+  position: relative;
 }
-.recipe-finder-container::-webkit-scrollbar {
+
+/* .recipe-finder-container::-webkit-scrollbar {
+  position: absolute;
+  right: -10px;
   display: none;
-}
+} */
 
 .RecipeListApp {
   display: flex;
@@ -194,19 +198,21 @@ img {
 .recipe-card {
   overflow-y: scroll;
   max-height: 50vh;
+  position: relative;
 }
+
 .recipe-card::-webkit-scrollbar {
-  display: none;
+  position: absolute;
+  right: 0;
 }
 
 .contact-card {
   overflow-y: scroll;
   max-height: 50vh;
 }
-.contact-card::-webkit-scrollbar {
-  display: none;
+.disabled {
+  cursor: not-allowed;
 }
-
 .recipe-finder.active,
 .recipe-notes.active,
 .contact-notes.active,

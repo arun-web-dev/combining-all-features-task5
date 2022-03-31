@@ -15,11 +15,13 @@ class EditContact extends Component {
       isActive: false,
       nameIsValid: false,
       numberIsValid: false,
+      id: "",
       error: {
         name: "",
         number: "",
       },
       add,
+      formValidated: false,
     };
   }
 
@@ -29,10 +31,20 @@ class EditContact extends Component {
     if (!name || !email) return;
     this.props.addContact({ name, email });
     this.setState({
-      name: "",
-      email: "",
-      isActive: true,
+      formValidated: true,
     });
+
+    setTimeout(() => {
+      this.setState({
+        name: "",
+        email: "",
+        error: {
+          name: "",
+          number: "",
+        },
+        isActive: true,
+      });
+    }, 1000);
   };
 
   editContact = (e) => {
@@ -42,10 +54,19 @@ class EditContact extends Component {
     if (!this.state.name || !this.state.email) return;
     this.props.modifyContact({ name, email, id });
     this.setState({
-      name: "",
-      email: "",
-      isActive: true,
+      formValidated: true,
     });
+    setTimeout(() => {
+      this.setState({
+        name: "",
+        email: "",
+        error: {
+          name: "",
+          number: "",
+        },
+        isActive: true,
+      });
+    }, 1000);
   };
   titleSelector = (e) => {
     const addContact = this.state.add && "Add Contact";
@@ -58,47 +79,55 @@ class EditContact extends Component {
     addContact ? this.updateContact(e) : this.editContact(e);
   };
 
+  validateForm = (id, value) => {
+    switch (id) {
+      case "name":
+        if (value.length >= 2) {
+          this.setState({
+            nameIsValid: false,
+            error: {
+              name: "Name is valid",
+            },
+          });
+        } else {
+          this.setState({
+            nameIsValid: true,
+            error: {
+              name: "Name must be 2 to 20 charcter long",
+            },
+          });
+        }
+        break;
+
+      case "email":
+        let emailRegExp = /^\d{10}$/;
+        if (emailRegExp.test(value)) {
+          this.setState({
+            error: {
+              number: "Number is Valid",
+            },
+            numberIsValid: true,
+          });
+        } else {
+          this.setState({
+            error: {
+              number: "Enter a valid 10 digit mobile number",
+            },
+            numberIsValid: false,
+          });
+        }
+        break;
+
+      default:
+        break;
+    }
+  };
+
   changeState = (e) => {
-    e.persist();
     const { id, value } = e.target;
-    id === "name" && this.setState({ name: value });
-    id === "email" && this.setState({ email: +value });
-
-    if (id === "email") {
-      if (this.state.email.toString().length === 9) {
-        this.setState({
-          error: {
-            number: "Number is valid",
-          },
-          numberIsValid: true,
-        });
-      } else {
-        this.setState({
-          error: {
-            number: "Enter a valid 10 digit mobile number",
-          },
-          numberIsValid: false,
-        });
-      }
-    }
-
-    if (id === "name") {
-      if (this.state.name.length > 15) {
-        this.setState({
-          nameIsValid: true,
-          error: {
-            name: "Name must below 20 characters long",
-          },
-        });
-      } else {
-        this.setState({
-          nameIsValid: false,
-          error: {
-            name: "",
-          },
-        });
-      }
-    }
+    id === "name" && this.setState({ name: value, id });
+    id === "email" && this.setState({ email: +value, id });
+    this.validateForm(id, value);
   };
   cancelContactHanler = (e) => {
     e.preventDefault();
@@ -139,7 +168,7 @@ class EditContact extends Component {
                   />
                   <div
                     className={
-                      !this.state.nameIsValid ? "mt2 red" : "mt2 green b"
+                      this.state.nameIsValid ? "mt2 red" : "mt2 green b"
                     }
                   >
                     {this.state.error.name}
@@ -152,12 +181,13 @@ class EditContact extends Component {
                     type="tel"
                     id="email"
                     onChange={this.changeState.bind(this.changeState)}
-                    placeholder="enter numbers only"
+                    placeholder="enter your phone number"
                   />
-
                   <div
                     className={
-                      !this.state.numberIsValid ? "mt2 red" : "mt2 green b"
+                      !this.state.numberIsValid && !this.state.nameIsValid
+                        ? "mt2 red"
+                        : "mt2 green b"
                     }
                   >
                     {this.state.error.number}
@@ -168,7 +198,7 @@ class EditContact extends Component {
                 <button
                   className={
                     !this.state.numberIsValid
-                      ? "b ph3 pv2 input-reset ba b--black bg-transparent pointer f6 dib"
+                      ? "b ph3 pv2 input-reset ba b--black bg-transparent  disabled f6 dib"
                       : "b ph3 pv2 input-reset ba b--black bg-transparent grow  pointer f6 dib"
                   }
                   type="submit"
@@ -183,6 +213,15 @@ class EditContact extends Component {
                 >
                   Cancel
                 </button>
+              </div>
+              <div>
+                {this.state.formValidated ? (
+                  <p className="pv2 ph3 ba b--black bg-green white b f6 dib">
+                    Sucess
+                  </p>
+                ) : (
+                  ""
+                )}
               </div>
             </form>
           </main>
