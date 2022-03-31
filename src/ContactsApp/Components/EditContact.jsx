@@ -22,11 +22,26 @@ class EditContact extends Component {
       },
       add,
       formValidated: false,
+      editValidation: email ? `${email}` : "",
     };
   }
 
   updateContact = (e) => {
     e.preventDefault();
+    const contactList = JSON.parse(localStorage.getItem("contacts"));
+    let filteredContactName = contactList.filter((contact) => {
+      return contact.name === this.state.name;
+    });
+
+    if (filteredContactName.length > 0) {
+      this.setState({
+        nameIsValid: true,
+        error: {
+          name: "Name already exsists",
+        },
+      });
+      return alert("Username alreay exsists");
+    }
     const { name, email } = this.state;
     if (!name || !email) return;
     this.props.addContact({ name, email });
@@ -52,6 +67,7 @@ class EditContact extends Component {
   };
   editContact = (e) => {
     e.preventDefault();
+
     const { name, email } = this.state;
     const { id } = this.props.location.state.contact;
     if (!this.state.name || !this.state.email) return;
@@ -73,9 +89,22 @@ class EditContact extends Component {
   };
 
   validateForm = (id, value) => {
+    const contactList = JSON.parse(localStorage.getItem("contacts"));
+
     switch (id) {
       case "name":
-        if (value.length >= 2) {
+        let filteredContactName = contactList.filter((contact) => {
+          return contact.name === value;
+        });
+
+        if (filteredContactName.length > 0) {
+          this.setState({
+            nameIsValid: true,
+            error: {
+              name: "Name already exsists.Please choose another one",
+            },
+          });
+        } else if (value.length >= 2) {
           this.setState({
             nameIsValid: false,
             error: {
@@ -94,7 +123,29 @@ class EditContact extends Component {
 
       case "email":
         let emailRegExp = /^\d{10}$/;
-        if (emailRegExp.test(value)) {
+        let filteredContact = contactList.filter((contact) => {
+          return contact.email === +value;
+        });
+        const filteredContactValidator = +this.state.editValidation;
+
+        if (
+          filteredContact.length > 0 &&
+          filteredContact[0].email === filteredContactValidator
+        ) {
+          this.setState({
+            error: {
+              number: "Phone number is Valid",
+            },
+            numberIsValid: true,
+          });
+        } else if (filteredContact.length > 0) {
+          this.setState({
+            error: {
+              number: "Contact already exsists",
+            },
+            numberIsValid: false,
+          });
+        } else if (emailRegExp.test(value)) {
           this.setState({
             error: {
               number: "Number is Valid",
@@ -113,6 +164,7 @@ class EditContact extends Component {
 
       default:
         break;
+        
     }
   };
 

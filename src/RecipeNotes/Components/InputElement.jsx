@@ -7,7 +7,7 @@ export function InputElement(props) {
     id = ``,
     onChange = "",
     placeholder = "",
-    autoComplete = "false",
+    autoComplete = "off",
   } = props;
   return (
     <input

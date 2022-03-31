@@ -21,6 +21,7 @@ class EditRecipe extends Component {
       },
       add,
       formValidated: false,
+      editValidation: publisher ? `${publisher}` : "",
     };
   }
   navigationTimeOut = () => {
@@ -39,8 +40,21 @@ class EditRecipe extends Component {
 
   updateRecipe = (e) => {
     e.preventDefault();
-    const recipeList =  JSON localStorage.getItem("recipe");
-    console.log(recipeList);
+    const recipeList = JSON.parse(localStorage.getItem("recipes"));
+    let filteredRecipeName = recipeList.filter((recipe) => {
+      return recipe.title === this.state.title;
+    });
+
+    if (filteredRecipeName.length > 0) {
+      this.setState({
+        titleIsValid: true,
+        error: {
+          title: "Title already exsists",
+        },
+      });
+      return alert("Title alreay exsists");
+    }
+
     const { title, publisher } = this.state;
     if (!title || !publisher) return;
     this.props.addRecipe({ title, publisher });
@@ -74,9 +88,20 @@ class EditRecipe extends Component {
   };
 
   validateForm = (id, value) => {
+    const recipeList = JSON.parse(localStorage.getItem("recipes"));
     switch (id) {
       case "title":
-        if (value.length >= 2) {
+        let filteredRecipeName = recipeList.filter((recipe) => {
+          return recipe.title === value;
+        });
+        if (filteredRecipeName.length > 0) {
+          this.setState({
+            titleIsValid: true,
+            error: {
+              title: "Title already exsists.Please choose another one",
+            },
+          });
+        } else if (value.length >= 2) {
           this.setState({
             titleIsValid: false,
             error: {
@@ -94,7 +119,28 @@ class EditRecipe extends Component {
         break;
 
       case "publisher":
-        if (value.length >= 4) {
+        let filteredRecipe = recipeList.filter((recipe) => {
+          return recipe.publisher === value;
+        });
+        const filteredRecipeValidator = this.state.editValidation;
+        if (
+          filteredRecipe.length > 0 &&
+          filteredRecipe[0].publisher === filteredRecipeValidator
+        ) {
+          this.setState({
+            error: {
+              publisher: "Title is Valid",
+            },
+            publisherIsValid: true,
+          });
+        } else if (filteredRecipe.length > 0) {
+          this.setState({
+            error: {
+              publisher: "Publisher already exsists",
+            },
+            publisherIsValid: false,
+          });
+        } else if (value.length >= 4) {
           this.setState({
             error: {
               publisher: "Publisher is Valid",
