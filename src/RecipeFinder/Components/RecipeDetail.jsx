@@ -9,12 +9,12 @@ export default function RecipeDetail(props) {
   return (
     <div className="recipe-modal flex jusify-center items-center">
       <div className="recipe-modal-bg"></div>
-      <article className="mw6 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10 close-btn ">
+      <article className="mw5 mw6-ns center bg-white br3 pa3 pa4-ns mv3 ba b--black-10 close-btn ">
         <div className="close-btn-before grow dim " onClick={props.closeModal}>
           X
         </div>
         <div className="tc">
-          <img src={image} className="br-100 h3 w3 dib" title={title} />
+          <img src={image} className="br-100 h4 w4 dib" title={title} />
           <h1 className="f4">{title}</h1>
           <hr className="mw3 bb bw1 b--black-10" />
         </div>

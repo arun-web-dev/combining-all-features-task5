@@ -34,7 +34,11 @@ class EditContact extends Component {
       formValidated: true,
     });
 
-    setTimeout(() => {
+    this.navigationTimeOut();
+  };
+
+  navigationTimeOut = () => {
+    return setTimeout(() => {
       this.setState({
         name: "",
         email: "",
@@ -46,7 +50,6 @@ class EditContact extends Component {
       });
     }, 1000);
   };
-
   editContact = (e) => {
     e.preventDefault();
     const { name, email } = this.state;
@@ -56,17 +59,7 @@ class EditContact extends Component {
     this.setState({
       formValidated: true,
     });
-    setTimeout(() => {
-      this.setState({
-        name: "",
-        email: "",
-        error: {
-          name: "",
-          number: "",
-        },
-        isActive: true,
-      });
-    }, 1000);
+    this.navigationTimeOut();
   };
   titleSelector = (e) => {
     const addContact = this.state.add && "Add Contact";

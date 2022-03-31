@@ -8,7 +8,7 @@ export default function Nabvar() {
   const navLinksLists = navLinks.map((link, index) => (
     <a
       key={index}
-      className="link gray f4 f4-ns dib mr4 pointer nav-link"
+      className="link gray f4 f4-ns dib mr4 mr3-m  mt3 mt0-ns pointer nav-link"
       title={link}
       onClick={(e) => {
         e.preventDefault();
@@ -41,7 +41,7 @@ export default function Nabvar() {
   };
 
   return (
-    <nav className=" flex pv3 justify-around items-end">
+    <nav className=" flex pv3 justify-around flex-column flex-row-ns  items-center items-end-ns">
       <div>
         <a className="link dim black b f1  tc dib  logo" href="#" title="Home">
           FindRecipe

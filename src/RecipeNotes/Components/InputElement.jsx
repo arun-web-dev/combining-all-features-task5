@@ -1,19 +1,25 @@
 export function InputElement(props) {
+  const {
+    name = "",
+    maxLength = "20",
+    type = "text",
+    className = "pa2 input-reset ba bg-transparent  w-100",
+    id = ``,
+    onChange = "",
+    placeholder = "",
+    autoComplete = "false",
+  } = props;
   return (
     <input
-      name={props.name ? props.name : ""}
-      maxLength={props.maxLength ? props.maxLength : "20"}
-      type={props.type ? props.type : "text"}
-      className={
-        props.className
-          ? props.className
-          : "pa2 input-reset ba bg-transparent  w-100"
-      }
-      id={props.id ? props.id : ""}
+      name={name}
+      maxLength={maxLength}
+      type={type}
+      className={className}
+      id={id}
       value={props.value ? props.value : ""}
-      onChange={props.onChange ? props.onChange : ""}
-      placeholder={props.placeholder ? props.placeholder : ""}
-      autoComplete={props.autoComplete ? props.autoComplete : "off"}
+      onChange={onChange}
+      placeholder={placeholder}
+      autoComplete={autoComplete}
       required
     />
   );

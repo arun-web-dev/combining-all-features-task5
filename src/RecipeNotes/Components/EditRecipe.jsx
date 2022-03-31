@@ -12,20 +12,42 @@ class EditRecipe extends Component {
       title: title ? `${title}` : "",
       publisher: publisher ? `${publisher}` : "",
       isActive: false,
+      titleIsValid: false,
+      publisherIsValid: false,
+      id: "",
+      error: {
+        title: "",
+        publisher: "",
+      },
       add,
+      formValidated: false,
     };
   }
+  navigationTimeOut = () => {
+    return setTimeout(() => {
+      this.setState({
+        title: "",
+        publisher: "",
+        error: {
+          title: "",
+          publisher: "",
+        },
+        isActive: true,
+      });
+    }, 1000);
+  };
 
   updateRecipe = (e) => {
     e.preventDefault();
+    const recipeList =  JSON localStorage.getItem("recipe");
+    console.log(recipeList);
     const { title, publisher } = this.state;
     if (!title || !publisher) return;
     this.props.addRecipe({ title, publisher });
     this.setState({
-      title: "",
-      publisher: "",
-      isActive: true,
+      formValidated: true,
     });
+    this.navigationTimeOut();
   };
 
   editRecipe = (e) => {
@@ -35,11 +57,11 @@ class EditRecipe extends Component {
     if (!title || !publisher) return;
     this.props.modifyRecipe({ title, publisher, id });
     this.setState({
-      title: "",
-      publisher: "",
-      isActive: true,
+      formValidated: true,
     });
+    this.navigationTimeOut();
   };
+
   titleSelector = (e) => {
     const addRecipe = this.state.add && "Add Recipe";
     const editRecipe = "Edit Recipe";
@@ -51,12 +73,54 @@ class EditRecipe extends Component {
     addRecipe ? this.updateRecipe(e) : this.editRecipe(e);
   };
 
+  validateForm = (id, value) => {
+    switch (id) {
+      case "title":
+        if (value.length >= 2) {
+          this.setState({
+            titleIsValid: false,
+            error: {
+              title: "Title is valid",
+            },
+          });
+        } else {
+          this.setState({
+            titleIsValid: true,
+            error: {
+              title: "Title must be 2 to 20 charcter long",
+            },
+          });
+        }
+        break;
+
+      case "publisher":
+        if (value.length >= 4) {
+          this.setState({
+            error: {
+              publisher: "Publisher is Valid",
+            },
+            publisherIsValid: true,
+          });
+        } else {
+          this.setState({
+            error: {
+              publisher: "Need to be larger than 2 character",
+            },
+            publisherIsValid: false,
+          });
+        }
+        break;
+
+      default:
+        break;
+    }
+  };
+
   changeState = (e) => {
-    const { value, name } = e.target;
-    
-    this.setState({
-      [name]: value,
-    });
+    const { id, value } = e.target;
+    id === "title" && this.setState({ title: value, id });
+    id === "publisher" && this.setState({ publisher: value, id });
+    this.validateForm(id, value);
   };
 
   componentDidMount() {
@@ -64,6 +128,13 @@ class EditRecipe extends Component {
       document.querySelector(".edit-recipe").classList.add("active");
     }, 50);
   }
+
+  cancelRecipeHandler = (e) => {
+    e.preventDefault();
+    this.setState({
+      isActive: true,
+    });
+  };
 
   render() {
     const { title, publisher, isActive } = this.state;
@@ -91,6 +162,13 @@ class EditRecipe extends Component {
                     onChange={this.changeState.bind(this.changeState)}
                     placeholder="enter title"
                   />
+                  <div
+                    className={
+                      this.state.titleIsValid ? "mt2 red" : "mt2 green b"
+                    }
+                  >
+                    {this.state.error.title}
+                  </div>
                 </div>
                 <div className="mv3">
                   <label className="db fw6 lh-copy f6">Publisher</label>
@@ -101,28 +179,45 @@ class EditRecipe extends Component {
                     onChange={this.changeState.bind(this.changeState)}
                     placeholder="enter your name to publish"
                   />
+                  <div
+                    className={
+                      !this.state.publisherIsValid && !this.state.titleIsValid
+                        ? "mt2 red"
+                        : "mt2 green b"
+                    }
+                  >
+                    {this.state.error.publisher}
+                  </div>
                 </div>
               </fieldset>
               <div>
                 <button
-                  className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                  className={
+                    !this.state.publisherIsValid
+                      ? "b ph3 pv2 input-reset ba b--black bg-transparent  disabled f6 dib"
+                      : "b ph3 pv2 input-reset ba b--black bg-transparent grow  pointer f6 dib"
+                  }
                   type="submit"
-                  // disabled={!this.state.formValid}
+                  disabled={!this.state.publisherIsValid}
                 >
                   {this.titleSelector()}
                 </button>
                 <button
                   className="b ph3 pv2 ml3 input-reset ba b--black bg-transparent grow pointer f6 dib"
                   type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.setState({
-                      isActive: true,
-                    });
-                  }}
+                  onClick={this.cancelRecipeHandler}
                 >
                   Cancel
                 </button>
+              </div>
+              <div>
+                {this.state.formValidated ? (
+                  <p className="pv2 ph3 ba b--black bg-green white b f6 dib">
+                    Sucess
+                  </p>
+                ) : (
+                  ""
+                )}
               </div>
             </form>
           </main>
