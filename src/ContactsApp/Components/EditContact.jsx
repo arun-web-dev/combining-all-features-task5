@@ -9,6 +9,7 @@ class EditContact extends Component {
     const name = this.props.location.state?.contact?.name;
     const email = this.props.location.state?.contact?.email;
     const { add } = this.props?.location?.state;
+    const contacts = this.props?.contacts;
     this.state = {
       name: name ? `${name}` : "",
       email: email ? `${email}` : "",
@@ -23,12 +24,14 @@ class EditContact extends Component {
       add,
       formValidated: false,
       editValidation: email ? `${email}` : "",
+      contacts,
     };
   }
 
   updateContact = (e) => {
     e.preventDefault();
-    const contactList = JSON.parse(localStorage.getItem("contacts"));
+    const contactList = this.state.contacts;
+    console.log();
     let filteredContactName = contactList.filter((contact) => {
       return contact.name === this.state.name;
     });
@@ -89,7 +92,7 @@ class EditContact extends Component {
   };
 
   validateForm = (id, value) => {
-    const contactList = JSON.parse(localStorage.getItem("contacts"));
+    const contactList = this.state.contacts;
 
     switch (id) {
       case "name":
@@ -164,7 +167,6 @@ class EditContact extends Component {
 
       default:
         break;
-        
     }
   };
 

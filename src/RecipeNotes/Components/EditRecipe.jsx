@@ -8,6 +8,7 @@ class EditRecipe extends Component {
     const title = this.props.location.state?.recipe?.title;
     const publisher = this.props.location.state?.recipe?.publisher;
     const { add } = this.props?.location?.state;
+    const recipes = this.props?.recipes;
     this.state = {
       title: title ? `${title}` : "",
       publisher: publisher ? `${publisher}` : "",
@@ -22,6 +23,7 @@ class EditRecipe extends Component {
       add,
       formValidated: false,
       editValidation: publisher ? `${publisher}` : "",
+      recipes,
     };
   }
   navigationTimeOut = () => {
@@ -40,7 +42,8 @@ class EditRecipe extends Component {
 
   updateRecipe = (e) => {
     e.preventDefault();
-    const recipeList = JSON.parse(localStorage.getItem("recipes"));
+    const recipeList = this.state.recipes;
+
     let filteredRecipeName = recipeList.filter((recipe) => {
       return recipe.title === this.state.title;
     });
@@ -88,7 +91,8 @@ class EditRecipe extends Component {
   };
 
   validateForm = (id, value) => {
-    const recipeList = JSON.parse(localStorage.getItem("recipes"));
+    const recipeList = this.state.recipes;
+    console.log(recipeList);
     switch (id) {
       case "title":
         let filteredRecipeName = recipeList.filter((recipe) => {
@@ -208,6 +212,7 @@ class EditRecipe extends Component {
                     onChange={this.changeState.bind(this.changeState)}
                     placeholder="enter title"
                   />
+
                   <div
                     className={
                       this.state.titleIsValid ? "mt2 red" : "mt2 green b"
@@ -227,9 +232,7 @@ class EditRecipe extends Component {
                   />
                   <div
                     className={
-                      !this.state.publisherIsValid && !this.state.titleIsValid
-                        ? "mt2 red"
-                        : "mt2 green b"
+                      !this.state.publisherIsValid ? "mt2 red" : "mt2 green b"
                     }
                   >
                     {this.state.error.publisher}

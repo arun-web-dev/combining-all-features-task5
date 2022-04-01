@@ -132,7 +132,11 @@ function App() {
           <Route
             path="/editRecipe"
             element={
-              <EditRecipe modifyRecipe={modifyRecipe} addRecipe={addRecipe} />
+              <EditRecipe
+                modifyRecipe={modifyRecipe}
+                addRecipe={addRecipe}
+                recipes={recipes}
+              />
             }
           />
           <Route
@@ -141,6 +145,7 @@ function App() {
               <EditContact
                 modifyContact={modifyContact}
                 addContact={addContact}
+                contacts={contacts}
               />
             }
           />
